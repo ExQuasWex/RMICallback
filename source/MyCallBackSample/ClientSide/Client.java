@@ -4,6 +4,8 @@ import MyCallBackSample.Constant;
 import MyCallBackSample.ServerSide.ServerInterface;
 
 import java.io.InputStreamReader;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -17,12 +19,24 @@ public class Client {
 
 
     private static ServerInterface server;
+    private static String hostIP = "192.168.1.106";
+    private static  InetAddress machineIp = null;
 
     public static void main(String[] args) {
+
+
+        machineIp = getIpAddress();
+
+
         try {
 
-            Registry reg = LocateRegistry.getRegistry("localhost", Constant.port);
+           // Registry reg = LocateRegistry.getRegistry("localhost",Constant.port);
+            System.setProperty("java.rmi.server.hostname",hostIP);
+            Registry reg =LocateRegistry.getRegistry(hostIP,Constant.port);
             server = (ServerInterface) reg.lookup(Constant.host);
+
+
+            // server = (ServerInterface) reg.lookup(Constant.host);
 
             System.out.println("Client is now ready");
 
@@ -35,7 +49,6 @@ public class Client {
         } catch (NotBoundException e) {
             e.printStackTrace();
         }
-
     }
 
     public static void showMenu(ServerInterface serverInterface, ClientCallBackInterface callBackInterface) throws RemoteException {
@@ -62,7 +75,7 @@ public class Client {
                 try {
 
 
-                   boolean isRegistered =  serverInterface.Register(name,pass,callBackInterface);
+                   boolean isRegistered =  serverInterface.Register(name,pass,callBackInterface, machineIp);
                         if (isRegistered){
                             System.out.println(name + " successfully Registered");
                         }else{
@@ -92,6 +105,18 @@ public class Client {
 
 
 
+    }
+
+    private static  InetAddress getIpAddress(){
+        InetAddress ip = null;
+
+        try {
+             ip = InetAddress.getLocalHost();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+
+        return  ip;
     }
 
 

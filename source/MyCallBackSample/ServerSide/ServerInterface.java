@@ -2,6 +2,7 @@ package MyCallBackSample.ServerSide;
 
 import MyCallBackSample.ClientSide.ClientCallBackInterface;
 
+import java.net.InetAddress;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
@@ -10,7 +11,7 @@ import java.rmi.RemoteException;
  */
 public interface ServerInterface extends Remote{
 
-    public boolean Register(String name, String password, ClientCallBackInterface clientCB) throws RemoteException;
+    public boolean Register(String name, String password, ClientCallBackInterface clientCB, InetAddress ip) throws RemoteException;
     public boolean Logout(String name) throws RemoteException;
 
 }

@@ -17,7 +17,7 @@ public class ClientImp extends UnicastRemoteObject implements ClientCallBackInte
 
     protected ClientImp() throws RemoteException {
 
-    }
+}
 
     @Override
     public boolean imAlive(String name) {
