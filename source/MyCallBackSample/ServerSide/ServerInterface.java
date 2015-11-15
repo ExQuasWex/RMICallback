@@ -11,7 +11,7 @@ import java.rmi.RemoteException;
  */
 public interface ServerInterface extends Remote{
 
-    public boolean Register(String name, String password, ClientCallBackInterface clientCB, InetAddress ip) throws RemoteException;
+    public boolean Register(String name, String password, ClientCallBackInterface clientCB, String ip) throws RemoteException;
     public boolean Logout(String name) throws RemoteException;
 
 }
